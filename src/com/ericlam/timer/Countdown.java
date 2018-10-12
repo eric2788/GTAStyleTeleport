@@ -43,7 +43,7 @@ public class Countdown {
                     player.setGravity(false);
                     player.setFlySpeed(0);
                     player.setGameMode(GameMode.SPECTATOR);
-                    //player.sendTitle("§e正在傳送...","",10,(int)origintime,10);
+                    player.sendTitle("§e正在傳送...","",10,(int)origintime,10);
                     Freeze.getInstance().getFreeze().add(player);
                 }
                 from.setPitch(90);
