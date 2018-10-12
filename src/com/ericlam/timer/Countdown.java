@@ -38,8 +38,8 @@ public class Countdown {
         int task = scheduler.scheduleSyncRepeatingTask(plugin, ()->{
             double y = from.getY();
             double y2 = to.getY();
-            if (time == origintime*0.8 || time == origintime*1){
-                if (time == origintime*1){
+            if (time == Math.round(origintime*0.8) || time == Math.round(origintime*1)){
+                if (time == Math.round(origintime*1)){
                     player.setAllowFlight(true);
                     player.setGravity(false);
                     player.setFlySpeed(0);
@@ -57,7 +57,7 @@ public class Countdown {
                 //player.sendMessage("DEBUG: y is now "+y);
             }
 
-            if(time == origintime*0.6){
+            if(time == Math.round(origintime*0.6)){
                 to.setPitch(90);
                 to.setYaw(90);
                 y2 += intervalY*3;
@@ -68,7 +68,7 @@ public class Countdown {
                 //player.sendMessage("DEBUG: y is now "+y2);
             }
 
-            if (time == origintime*0.4 || time == origintime*0.2 || time == origintime*0){
+            if (time == Math.round(origintime*0.4) || time == Math.round(origintime*0.2) || time == Math.round(origintime*0)){
                 to.setPitch(90);
                 to.setYaw(90);
                 y2 -= intervalY;
@@ -76,7 +76,7 @@ public class Countdown {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20,0));
                 player.playSound(to, Sound.ENTITY_ENDERMAN_TELEPORT,1,1);
                 //player.sendMessage("DEBUG: y is now "+y2);
-                if(time <= origintime*0){
+                if(time == Math.round(origintime*0)){
                     player.teleport(originTo , PlayerTeleportEvent.TeleportCause.UNKNOWN);
                     player.setGameMode(beforegammemode);
                     player.setGravity(true);
