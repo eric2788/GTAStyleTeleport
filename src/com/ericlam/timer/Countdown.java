@@ -1,5 +1,6 @@
 package com.ericlam.timer;
 
+import com.ericlam.main.Freeze;
 import com.ericlam.main.MineStrike;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -42,7 +43,8 @@ public class Countdown {
                     player.setGravity(false);
                     player.setFlySpeed(0);
                     player.setGameMode(GameMode.SPECTATOR);
-                    player.sendTitle("§e正在傳送...","",10,(int)origintime,10);
+                    //player.sendTitle("§e正在傳送...","",10,(int)origintime,10);
+                    Freeze.getInstance().getFreeze().add(player);
                 }
                 from.setPitch(90);
                 from.setYaw(90);
@@ -51,7 +53,7 @@ public class Countdown {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20,0));
                 player.playSound(from, Sound.ENTITY_ENDERMAN_TELEPORT,1,1);
                 player.teleport(from, PlayerTeleportEvent.TeleportCause.UNKNOWN);
-                player.sendMessage("DEBUG: y is now "+y);
+                //player.sendMessage("DEBUG: y is now "+y);
             }
 
             if(time == origintime*0.6){
@@ -61,7 +63,7 @@ public class Countdown {
                 to.setY(y2);
                 player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20,0));
                 player.teleport(to, PlayerTeleportEvent.TeleportCause.UNKNOWN);
-                player.sendMessage("DEBUG: y is now "+y2);
+                //player.sendMessage("DEBUG: y is now "+y2);
             }
 
             if (time == origintime*0.4 || time == origintime*0.2 || time == origintime*0){
@@ -71,13 +73,14 @@ public class Countdown {
                 to.setY(y2);
                 player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20,0));
                 player.playSound(to, Sound.ENTITY_ENDERMAN_TELEPORT,1,1);
-                player.sendMessage("DEBUG: y is now "+y2);
+                //player.sendMessage("DEBUG: y is now "+y2);
                 if(time <= origintime*0){
                     player.teleport(originTo , PlayerTeleportEvent.TeleportCause.UNKNOWN);
                     player.setGameMode(beforegammemode);
                     player.setGravity(true);
                     player.setAllowFlight(false);
                     player.setFlySpeed(0.25F);
+                    Freeze.getInstance().getFreeze().remove(player);
                     stopCountdown(player);
                     return;
                 }
@@ -85,7 +88,7 @@ public class Countdown {
             }
 
 
-            player.sendMessage("DEBUG: timer: "+time);
+            //player.sendMessage("DEBUG: timer: "+time);
             time -= 1;
         },0L,20L);
         count.put(player,task);
