@@ -2,3 +2,9 @@
 Interval-Y: 50
 # 傳送總耗時
 time: 5
+# 允許使用此傳送方式的指令列表。若果你所輸入的並非傳送指令，將無法運行。
+allow-command:
+  - /loc
+  - /tp
+  - /home
+  - /spawn
