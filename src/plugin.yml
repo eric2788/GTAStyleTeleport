@@ -1,0 +1,12 @@
+name: MineStrike
+version: 0.0.1
+main: com.ericlam.main.MineStrike
+author: hydranapse_
+api-version: 1.13
+commands:
+  setloc:
+    description: set test location
+  loc:
+    description: tp to test location
+  return:
+    description: restore player
