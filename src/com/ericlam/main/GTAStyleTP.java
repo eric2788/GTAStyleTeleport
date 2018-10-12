@@ -23,13 +23,13 @@ public class GTAStyleTP extends JavaPlugin {
         plugin = this;
         addNewFile("config.yml");
         addNewFile("test-location.yml");
-        getLogger().info("MineStrike enabled");
+        getLogger().info("GTAStyleTeleport enabled");
         this.getServer().getPluginManager().registerEvents(new OnTeleport(),this);
     }
 
     @Override
     public void onDisable() {
-        getLogger().info("MineStrike disable");
+        getLogger().info("GTAStyleTeleport disable");
     }
 
     @Override
@@ -38,7 +38,7 @@ public class GTAStyleTP extends JavaPlugin {
             sender.sendMessage("you are not player!");
             return false;
         }
-        if (!sender.hasPermission("minestrike.tester")) {
+        if (!sender.hasPermission("gtateleport.tester")) {
             sender.sendMessage("§c沒有權限");
             return false;
         }
