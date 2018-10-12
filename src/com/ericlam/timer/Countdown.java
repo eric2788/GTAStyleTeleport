@@ -62,6 +62,7 @@ public class Countdown {
                 y2 += intervalY*3;
                 to.setY(y2);
                 player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20,0));
+                player.playSound(from, Sound.ENTITY_ENDERMAN_TELEPORT,1,1);
                 player.teleport(to, PlayerTeleportEvent.TeleportCause.UNKNOWN);
                 //player.sendMessage("DEBUG: y is now "+y2);
             }
