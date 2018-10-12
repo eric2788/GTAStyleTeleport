@@ -19,7 +19,7 @@ public class OnTeleport implements Listener {
 
     @EventHandler
     public void onPlayerTeleport(PlayerTeleportEvent e){
-        if(e.getCause() == PlayerTeleportEvent.TeleportCause.PLUGIN || e.getCause() == PlayerTeleportEvent.TeleportCause.COMMAND) {
+        if(e.getCause() == PlayerTeleportEvent.TeleportCause.COMMAND) {
             e.setCancelled(true);
             Location from = e.getFrom();
             Location to = e.getTo();
