@@ -35,7 +35,6 @@ public class Countdown {
             if (time == Math.round(origintime*0.8) || time == Math.round(origintime*1)){
                 if (time == Math.round(origintime*1)){
                     player.setAllowFlight(true);
-                    player.setGravity(false);
                     player.setFlySpeed(0);
                     player.setGameMode(GameMode.SPECTATOR);
                     player.sendTitle("§e正在傳送...","",10,(int)origintime*20,10);
@@ -71,12 +70,14 @@ public class Countdown {
                 player.playSound(to, Sound.ENTITY_ENDERMAN_TELEPORT,1,1);
                 //player.sendMessage("DEBUG: y is now "+y2);
                 if(time == Math.round(origintime*0)){
+                    Map map = Map.getInstance();
                     player.teleport(originTo);
                     player.setGameMode(beforegammemode);
-                    player.setGravity(true);
                     player.setAllowFlight(false);
                     player.setFlySpeed(0.25F);
-                    Map.getInstance().getFreeze().remove(player);
+                    map.getFreeze().remove(player);
+                    map.getLoc().remove(player);
+                    map.getGamemode().remove(player);
                     stopCountdown(player);
                     return;
                 }

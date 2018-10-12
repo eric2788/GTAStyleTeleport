@@ -29,7 +29,11 @@ public class GTAStyleTP extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        getLogger().info("GTAStyleTeleport disable");
+        Map map = Map.getInstance();
+        for (Player player : Bukkit.getOnlinePlayers()){
+            map.handlePlayerQuit(player);
+        }
+        getLogger().info("GTAStyleTeleport disabled");
     }
 
     @Override
@@ -81,7 +85,6 @@ public class GTAStyleTP extends JavaPlugin {
         }
         if(command.getName().equals("return")){
             player.setAllowFlight(false);
-            player.setGravity(true);
             player.setWalkSpeed(0.25F);
             player.sendMessage("§a Restored.");
         }
