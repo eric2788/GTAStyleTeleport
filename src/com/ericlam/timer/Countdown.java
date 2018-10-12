@@ -31,6 +31,7 @@ public class Countdown {
     }
 
     public void startCountdown(Player player, Location from, Location to, GameMode beforegammemode){
+        if (count.containsKey(player)) return;
         BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
         int intervalY = config.getInt("Interval-Y");
         final Location originTo = to;
