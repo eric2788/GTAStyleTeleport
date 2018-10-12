@@ -1,21 +1,18 @@
 package com.ericlam.listener;
 
 import com.ericlam.main.Freeze;
-import com.ericlam.main.MineStrike;
+import com.ericlam.main.GTAStyleTP;
 import com.ericlam.timer.Countdown;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.plugin.Plugin;
 
-import java.util.HashSet;
-
 public class OnTeleport implements Listener {
-    private Plugin plugin = MineStrike.plugin;
+    private Plugin plugin = GTAStyleTP.plugin;
 
     @EventHandler
     public void onPlayerTeleport(PlayerTeleportEvent e){

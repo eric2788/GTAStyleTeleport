@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="GTAStyleTeleport">
+    <output-path>$PROJECT_DIR$/out/artifacts/GTAStyleTeleport</output-path>
+    <root id="archive" name="GTAStyleTeleport.jar">
+      <element id="module-output" name="GTAStyleTeleport" />
+    </root>
+  </artifact>
+</component>

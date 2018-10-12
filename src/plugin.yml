@@ -1,6 +1,6 @@
-name: MineStrike
+name: GTAStyleTeleport
 version: 1.5
-main: com.ericlam.main.MineStrike
+main: com.ericlam.main.GTAStyleTP
 author: hydranapse_
 api-version: 1.13
 commands:

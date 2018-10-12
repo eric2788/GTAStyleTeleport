@@ -16,7 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.IOException;
 
-public class MineStrike extends JavaPlugin {
+public class GTAStyleTP extends JavaPlugin {
     public static Plugin plugin;
     @Override
     public void onEnable() {

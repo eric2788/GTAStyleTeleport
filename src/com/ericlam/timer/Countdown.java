@@ -1,7 +1,7 @@
 package com.ericlam.timer;
 
 import com.ericlam.main.Freeze;
-import com.ericlam.main.MineStrike;
+import com.ericlam.main.GTAStyleTP;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -19,16 +19,11 @@ import java.io.File;
 import java.util.HashMap;
 
 public class Countdown {
-    private Plugin plugin = MineStrike.plugin;
+    private Plugin plugin = GTAStyleTP.plugin;
     private FileConfiguration config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(),"config.yml"));
     private double time = config.getInt("time");
     private final double origintime = time;
     private HashMap<Player, Integer> count = new HashMap<>();
-
-
-    public void setTime(int time) {
-        this.time = time;
-    }
 
     public void startCountdown(Player player, Location from, Location to, GameMode beforegammemode){
         if (count.containsKey(player)) return;
