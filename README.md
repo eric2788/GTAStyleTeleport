@@ -1,9 +1,8 @@
 # GTAStyleTeleport
 受委託於 MineStrike 伺服器
 
-## 下載
+## [點此下載插件](http://gestyy.com/wZiqby)
 
-http://www.mediafire.com/file/o029detjk77jail/GTAStyleTeleport.jar/file
 
 ## 演示
 
