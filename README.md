@@ -1,13 +1,15 @@
 # GTAStyleTeleport
 受委託於 MineStrike 伺服器
 
+## 演示
 
+https://youtu.be/jw9y7myWQUw
 
-指令(全部需要權限 gtateleport.tester): 
+## 指令(全部需要權限 gtateleport.tester): 
 - /setloc - 設置測試位置
 - /loc - 傳送到測試位置
 
-加入伺服器時使用此傳送:
+### 加入伺服器時使用此傳送:
   - 需要到 config.yml 開啟其功能
   - 玩家需要擁有權限 gtateleport.join
   
