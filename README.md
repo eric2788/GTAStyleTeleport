@@ -13,4 +13,4 @@
   - 需要到 config.yml 開啟其功能
   - 玩家需要擁有權限 gtateleport.join
   
-## 兼容所有傳送插件 (包括Essentails) 以及傳送指令。 
+## 兼容所有傳送插件 (包括Essentials) 以及傳送指令。 
