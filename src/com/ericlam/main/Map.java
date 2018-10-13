@@ -37,7 +37,7 @@ public class Map {
     }
 
     public void handlePlayerQuit(Player player){
-        if(!Map.getInstance().getCount().containsKey(player)) return;
+        if(!count.containsKey(player)) return;
             player.setAllowFlight(false);
             player.setFlySpeed(0.25F);
             player.setGameMode(gamemode.get(player));

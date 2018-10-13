@@ -2,6 +2,8 @@
 Interval-Y: 50
 # 傳送總耗時
 time: 5
+# 允許把此傳送方式用在加入伺服器的時候。並且需要有 gtateleport.join 的權限
+enable-on-join: true
 # 允許使用此傳送方式的指令列表。若果你所輸入的並非傳送指令，將無法運行。
 allow-command:
   - /loc

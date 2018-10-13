@@ -8,5 +8,10 @@ commands:
     description: set test location
   loc:
     description: tp to test location
-  return:
-    description: restore player
+permissions:
+  gtateleport.tester:
+    default: op
+    description: 測試人員權限, 可以使用上方所有指令
+  gtateleport.join:
+    default: false
+    description: 允許玩家加入伺服器時使用此傳送方式

@@ -1,7 +1,7 @@
 package com.ericlam.timer;
 
-import com.ericlam.main.Map;
 import com.ericlam.main.GTAStyleTP;
+import com.ericlam.main.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -17,51 +17,49 @@ import org.bukkit.scheduler.BukkitScheduler;
 import java.io.File;
 import java.util.HashMap;
 
-public class Countdown {
+public class CountdownOnJoin {
+
     private Plugin plugin = GTAStyleTP.plugin;
     private FileConfiguration config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(),"config.yml"));
     private double time = config.getInt("time");
     private final double origintime = time;
-    private HashMap<Player, Integer> count = Map.getInstance().getCount();
+    private HashMap<Player, Integer> count = new HashMap<>();
 
-    public void startCountdown(Player player, Location from, Location to, GameMode beforegammemode){
+    public void startCountdown(Player player, Location to, GameMode beforegammemode){
         if (count.containsKey(player)) return;
         BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
         int intervalY = config.getInt("Interval-Y");
         final Location originTo = to;
         int task = scheduler.scheduleSyncRepeatingTask(plugin, ()->{
-            double y = from.getY();
             double y2 = to.getY();
-            if (time == Math.round(origintime*0.8) || time == Math.round(origintime*1)){
-                if (time == Math.round(origintime*1)){
-                    player.setAllowFlight(true);
-                    player.setFlySpeed(0);
-                    player.setGameMode(GameMode.SPECTATOR);
-                    player.sendTitle("§e正在傳送...","",10,(int)origintime*20,10);
-                    Map.getInstance().getFreeze().add(player);
-                }
-                from.setPitch(90);
-                from.setYaw(90);
-                y += intervalY;
-                from.setY(y);
-                player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20,0));
-                player.playSound(from, Sound.ENTITY_ENDERMAN_TELEPORT,1,1);
-                player.teleport(from);
-                //player.sendMessage("DEBUG: y is now "+y);
-            }
-
-            if(time == Math.round(origintime*0.6)){
+            if (time == Math.round(origintime*1)){
+                player.setAllowFlight(true);
+                player.setFlySpeed(0);
+                player.setGameMode(GameMode.SPECTATOR);
+                player.sendTitle("§e正在傳送...","",10,(int)origintime*20,10);
+                Map.getInstance().getFreeze().add(player);
                 to.setPitch(90);
                 to.setYaw(90);
-                y2 += intervalY*3;
+                y2 += intervalY*2;
                 to.setY(y2);
+                player.teleport(to);
                 player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20,0));
                 player.playSound(to, Sound.ENTITY_ENDERMAN_TELEPORT,1,1);
-                player.teleport(to);
                 //player.sendMessage("DEBUG: y is now "+y2);
             }
 
-            if (time == Math.round(origintime*0.4) || time == Math.round(origintime*0.2) || time == Math.round(origintime*0)){
+            if (time == Math.round(origintime*0.5)){
+                to.setPitch(90);
+                to.setYaw(90);
+                y2 -= intervalY;
+                to.setY(y2);
+                player.teleport(to);
+                player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20,0));
+                player.playSound(to, Sound.ENTITY_ENDERMAN_TELEPORT,1,1);
+                //player.sendMessage("DEBUG: y is now "+y2);
+            }
+
+            if (time == Math.round(origintime*0.1)){
                 to.setPitch(90);
                 to.setYaw(90);
                 y2 -= intervalY;
@@ -69,19 +67,15 @@ public class Countdown {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20,0));
                 player.playSound(to, Sound.ENTITY_ENDERMAN_TELEPORT,1,1);
                 //player.sendMessage("DEBUG: y is now "+y2);
-                if(time == Math.round(origintime*0)){
-                    Map map = Map.getInstance();
-                    player.teleport(originTo);
-                    player.setGameMode(beforegammemode);
-                    player.setAllowFlight(false);
-                    player.setFlySpeed(0.1F);
-                    map.getFreeze().remove(player);
-                    map.getLoc().remove(player);
-                    map.getGamemode().remove(player);
-                    stopCountdown(player);
-                    return;
-                }
-                player.teleport(to);
+                player.teleport(originTo);
+                player.setGameMode(beforegammemode);
+                player.setAllowFlight(false);
+                player.setFlySpeed(0.1F);
+                Map map = Map.getInstance();
+                map.getFreeze().remove(player);
+                map.getLoc().remove(player);
+                map.getGamemode().remove(player);
+                stopCountdown(player);
             }
 
 
@@ -96,5 +90,4 @@ public class Countdown {
         Bukkit.getScheduler().cancelTask(count.get(player));
         count.remove(player);
     }
-
 }

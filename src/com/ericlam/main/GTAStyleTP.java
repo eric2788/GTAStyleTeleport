@@ -83,11 +83,6 @@ public class GTAStyleTP extends JavaPlugin {
             double yaw = testloc.getDouble("yaw");
             player.teleport(new Location(world,x,y,z,(float)yaw,(float)pitch));
         }
-        if(command.getName().equals("return")){
-            player.setAllowFlight(false);
-            player.setWalkSpeed(0.25F);
-            player.sendMessage("§a Restored.");
-        }
         return true;
     }
 
