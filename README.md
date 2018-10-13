@@ -3,7 +3,7 @@
 
 ## 演示
 
-[![插件演示](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](https://www.youtube.com/watch?v=jw9y7myWQUw)
+[![插件演示](https://img.youtube.com/vi/jw9y7myWQUw/0.jpg)](https://www.youtube.com/watch?v=jw9y7myWQUw)
 
 ## 指令(全部需要權限 gtateleport.tester): 
 - /setloc - 設置測試位置
