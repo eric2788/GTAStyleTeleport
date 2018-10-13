@@ -29,7 +29,7 @@ public class OnTeleport implements Listener {
     @EventHandler
     public void onPlayerTeleport(PlayerTeleportEvent e){
         Player player = e.getPlayer();
-        if(e.getCause() == PlayerTeleportEvent.TeleportCause.PLUGIN && allow.contains(e.getPlayer())) {
+        if(allow.contains(e.getPlayer())) {
             e.setCancelled(true);
             Location from = e.getFrom();
             Location to = e.getTo();
@@ -63,17 +63,21 @@ public class OnTeleport implements Listener {
             return;
         }
         if (allow.contains(player)) return;
+        //player.sendMessage("DEBUG: "+e.getMessage());
         List<String> commandlist = config.getStringList("allow-command");
         for (String commands : commandlist) {
             if (label[0].equalsIgnoreCase(commands)) {
                 allow.add(player);
+                //player.sendMessage("DEBUG: 符合指令列表內的指令，已把你添加到隊列。");
                 map.getLoc().put(player,player.getLocation());
                 Bukkit.getScheduler().runTaskLater(plugin, ()->{
                     if (!Map.getInstance().getCount().containsKey(player)){
                         allow.remove(player);
                         map.getLoc().remove(player);
+                        //player.sendMessage("DEBUG： 沒有觸發傳送，已移除你至隊列。");
                     }
                 },20L);
+                break;
             }
         }
     }
