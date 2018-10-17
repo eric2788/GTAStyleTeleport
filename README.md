@@ -1,6 +1,8 @@
 # GTAStyleTeleport
 受委託於 MineStrike 伺服器
 
+### 版本: 1.13.1
+
 ## [點此下載插件](http://gestyy.com/wZiqby)
 
 ## 問題
