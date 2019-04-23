@@ -4,7 +4,7 @@
 ### 版本: 1.13.1
 
 ## 下載
-[點此下載插件](http://gestyy.com/wZiqby) | [Mirror](http://www.mediafire.com/file/o029detjk77jail/GTAStyleTeleport.jar/file)
+[下載插件](http://corneey.com/wMiYVj) | [Mirror](https://drive.google.com/open?id=1oNFsjsq_0AcOD1CcXqjL6js5gPa5CtZK)
 
 ## 問題
 有問題請善用 [Issue](https://github.com/eric2788/GTAStyleTeleport/issues)
