@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="GTAStyleTeleport">
-    <output-path>$PROJECT_DIR$/../../Studio Production/2017-2018/MineStrikeTest/plugins</output-path>
-    <root id="archive" name="GTAStyleTeleport.jar">
-      <element id="module-output" name="GTAStyleTeleport" />
-    </root>
-  </artifact>
-</component>

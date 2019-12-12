@@ -1,11 +1,10 @@
 package com.ericlam.timer;
 
+import com.ericlam.main.AnimatedTeleport;
 import com.ericlam.main.Map;
-import com.ericlam.main.GTAStyleTP;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
-import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -18,8 +17,8 @@ import java.io.File;
 import java.util.HashMap;
 
 public class Countdown {
-    private Plugin plugin = GTAStyleTP.plugin;
-    private FileConfiguration config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(),"config.yml"));
+    private Plugin plugin = AnimatedTeleport.plugin;
+    private FileConfiguration config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "config.yml"));
     private double time = config.getInt("time");
     private final double origintime = time;
     private HashMap<Player, Integer> count = Map.getInstance().getCount();
@@ -36,16 +35,17 @@ public class Countdown {
                 if (time == Math.round(origintime*1)){
                     player.setAllowFlight(true);
                     player.setFlySpeed(0);
+                    player.setFlying(true);
                     player.setGameMode(GameMode.SPECTATOR);
-                    player.sendTitle("§e正在傳送...","",10,(int)origintime*20,10);
+                    player.sendTitle(AnimatedTeleport.getMessage("tp-title"), "", 10, (int) origintime * 20, 10);
                     Map.getInstance().getFreeze().add(player);
                 }
                 from.setPitch(90);
                 from.setYaw(90);
                 y += intervalY;
                 from.setY(y);
-                player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20,0));
-                player.playSound(from, Sound.ENTITY_ENDERMAN_TELEPORT,1,1);
+                player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 0));
+                player.playSound(from, AnimatedTeleport.sound, 1, 1);
                 player.teleport(from);
                 //player.sendMessage("DEBUG: y is now "+y);
             }
@@ -55,26 +55,31 @@ public class Countdown {
                 to.setYaw(90);
                 y2 += intervalY*3;
                 to.setY(y2);
-                player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20,0));
-                player.playSound(to, Sound.ENTITY_ENDERMAN_TELEPORT,1,1);
+                player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 0));
+                player.playSound(to, AnimatedTeleport.sound, 1, 1);
                 player.teleport(to);
                 //player.sendMessage("DEBUG: y is now "+y2);
             }
 
-            if (time == Math.round(origintime*0.4) || time == Math.round(origintime*0.2) || time == Math.round(origintime*0)){
+            if (time == Math.round(origintime*0.4) || time == Math.round(origintime*0.2) || time == Math.round(origintime*0)) {
                 to.setPitch(90);
                 to.setYaw(90);
                 y2 -= intervalY;
+                player.setAllowFlight(true);
+                player.setFlying(true);
+                player.setFlySpeed(0.0f);
                 to.setY(y2);
-                player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20,0));
-                player.playSound(to, Sound.ENTITY_ENDERMAN_TELEPORT,1,1);
+                player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 0));
+                player.playSound(to, AnimatedTeleport.sound, 1, 1);
                 //player.sendMessage("DEBUG: y is now "+y2);
-                if(time == Math.round(origintime*0)){
+                if (time == Math.round(origintime * 0)) {
                     Map map = Map.getInstance();
                     player.teleport(originTo);
                     player.setGameMode(beforegammemode);
-                    player.setAllowFlight(false);
+                    player.setFlying(false);
                     player.setFlySpeed(0.1F);
+                    player.setGravity(true);
+                    player.setAllowFlight(false);
                     map.getFreeze().remove(player);
                     map.getLoc().remove(player);
                     map.getGamemode().remove(player);

@@ -1,7 +1,7 @@
 package com.ericlam.listener;
 
+import com.ericlam.main.AnimatedTeleport;
 import com.ericlam.main.Map;
-import com.ericlam.main.GTAStyleTP;
 import com.ericlam.timer.Countdown;
 import com.ericlam.timer.CountdownOnJoin;
 import org.bukkit.Bukkit;
@@ -16,12 +16,11 @@ import org.bukkit.event.player.*;
 import org.bukkit.plugin.Plugin;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
 public class OnTeleport implements Listener {
-    private Plugin plugin = GTAStyleTP.plugin;
+    private Plugin plugin = AnimatedTeleport.plugin;
     private HashSet<Player> allow = new HashSet<>();
     private Map map = Map.getInstance();
     private FileConfiguration config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(),"config.yml"));
@@ -59,7 +58,7 @@ public class OnTeleport implements Listener {
         String[] label = e.getMessage().split(" ");
         if (map.getCount().containsKey(player)){
             e.setCancelled(true);
-            player.sendMessage("§c傳送中，無法執行其他指令!");
+            player.sendMessage(AnimatedTeleport.getMessage("teleporting"));
             return;
         }
         if (allow.contains(player)) return;
@@ -85,7 +84,7 @@ public class OnTeleport implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e){
         Player player = e.getPlayer();
-        if (!config.getBoolean("enable-on-join") || !player.hasPermission("gtateleport.join")) return;
+        if (!config.getBoolean("enable-on-join") || !player.hasPermission("ar.join")) return;
         Location to = player.getLocation();
         GameMode gm = player.getGameMode();
         map.getGamemode().put(player,gm);

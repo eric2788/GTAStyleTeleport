@@ -1,12 +1,27 @@
 # 每次上升/下降的方塊距離
+# the teleport Y interval
 Interval-Y: 50
 # 傳送總耗時
+# tp total time
 time: 5
 # 允許把此傳送方式用在加入伺服器的時候。並且需要有 gtateleport.join 的權限
+# enable whether to apply this teleport on join, the player must have gtateleport.join to do it
 enable-on-join: true
 # 允許使用此傳送方式的指令列表。若果你所輸入的並非傳送指令，將無法運行。
+# the tp command in this list will auto apply this teleport style
 allow-command:
   - /loc
   - /tp
   - /home
   - /spawn
+# 傳送聲效 (默認 1.14.4 聲效名稱，若要轉版本，請自行更改)
+# teleport sound (default using 1.14.4 sound name, change the sound name to match your server version yourself.)
+teleport-sound: ENTITY_ENDERMAN_TELEPORT
+messages:
+  tp-title: "&e正在傳送..."
+  no-perm: "&c沒有權限"
+  set-success: "&a測試位置設置成功! 可輸入 /loc 來測試GTA傳送"
+  no-loc: "&c尚未設置測試位置!"
+  invalid-loc: "&c位置無效"
+  teleporting: "&c傳送中，無法執行其他指令!"
+  reload-success: "&a插件重載成功"

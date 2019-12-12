@@ -1,11 +1,10 @@
 package com.ericlam.timer;
 
-import com.ericlam.main.GTAStyleTP;
+import com.ericlam.main.AnimatedTeleport;
 import com.ericlam.main.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
-import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -19,8 +18,8 @@ import java.util.HashMap;
 
 public class CountdownOnJoin {
 
-    private Plugin plugin = GTAStyleTP.plugin;
-    private FileConfiguration config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(),"config.yml"));
+    private Plugin plugin = AnimatedTeleport.plugin;
+    private FileConfiguration config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "config.yml"));
     private double time = config.getInt("time");
     private final double origintime = time;
     private HashMap<Player, Integer> count = new HashMap<>();
@@ -34,17 +33,18 @@ public class CountdownOnJoin {
             double y2 = to.getY();
             if (time == Math.round(origintime*1)){
                 player.setAllowFlight(true);
+                player.setFlying(true);
                 player.setFlySpeed(0);
                 player.setGameMode(GameMode.SPECTATOR);
-                player.sendTitle("§e正在傳送...","",10,(int)origintime*20,10);
+                player.sendTitle(AnimatedTeleport.getMessage("tp-title"), "", 10, (int) origintime * 20, 10);
                 Map.getInstance().getFreeze().add(player);
                 to.setPitch(90);
                 to.setYaw(90);
                 y2 += intervalY*2;
                 to.setY(y2);
                 player.teleport(to);
-                player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20,0));
-                player.playSound(to, Sound.ENTITY_ENDERMAN_TELEPORT,1,1);
+                player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 0));
+                player.playSound(to, AnimatedTeleport.sound, 1, 1);
                 //player.sendMessage("DEBUG: y is now "+y2);
             }
 
@@ -54,8 +54,8 @@ public class CountdownOnJoin {
                 y2 -= intervalY;
                 to.setY(y2);
                 player.teleport(to);
-                player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20,0));
-                player.playSound(to, Sound.ENTITY_ENDERMAN_TELEPORT,1,1);
+                player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 0));
+                player.playSound(to, AnimatedTeleport.sound, 1, 1);
                 //player.sendMessage("DEBUG: y is now "+y2);
             }
 
@@ -64,11 +64,12 @@ public class CountdownOnJoin {
                 to.setYaw(90);
                 y2 -= intervalY;
                 to.setY(y2);
-                player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20,0));
-                player.playSound(to, Sound.ENTITY_ENDERMAN_TELEPORT,1,1);
+                player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 0));
+                player.playSound(to, AnimatedTeleport.sound, 1, 1);
                 //player.sendMessage("DEBUG: y is now "+y2);
                 player.teleport(originTo);
                 player.setGameMode(beforegammemode);
+                player.setFlying(false);
                 player.setAllowFlight(false);
                 player.setFlySpeed(0.1F);
                 Map map = Map.getInstance();

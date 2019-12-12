@@ -1,17 +1,22 @@
-name: GTAStyleTeleport
-version: 1.5
-main: com.ericlam.main.GTAStyleTP
+name: AnimatedTeleport
+version: "1.6"
+main: com.ericlam.main.AnimatedTeleport
 author: hydranapse_
-api-version: 1.13
+api-version: "1.13"
 commands:
   setloc:
     description: set test location
   loc:
     description: tp to test location
+  ar-reload:
+    description: reload config
 permissions:
-  gtateleport.tester:
+  ar.tester:
     default: op
-    description: 測試人員權限, 可以使用上方所有指令
-  gtateleport.join:
+    description: allow to use /setloc and /loc permissions
+  ar.join:
     default: false
-    description: 允許玩家加入伺服器時使用此傳送方式
+    description: allow player use this teleport when join
+  ar.reload:
+    default: op
+    description: permission to reload config

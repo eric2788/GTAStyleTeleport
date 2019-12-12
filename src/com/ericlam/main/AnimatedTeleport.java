@@ -1,10 +1,7 @@
 package com.ericlam.main;
 
 import com.ericlam.listener.OnTeleport;
-import com.ericlam.timer.Countdown;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -16,21 +13,45 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.IOException;
 
-public class GTAStyleTP extends JavaPlugin {
+public class AnimatedTeleport extends JavaPlugin {
     public static Plugin plugin;
+
+    public static Sound sound;
+    private static FileConfiguration config;
+
+    public static String getMessage(String path) {
+        return ChatColor.translateAlternateColorCodes('&', config.getString("messages.".concat(path)));
+    }
+
     @Override
     public void onEnable() {
         plugin = this;
         addNewFile("config.yml");
         addNewFile("test-location.yml");
         getLogger().info("GTAStyleTeleport enabled");
-        this.getServer().getPluginManager().registerEvents(new OnTeleport(),this);
+        this.getCommand("ar-reload").setExecutor((commandSender, command, s, strings) -> {
+            if (!commandSender.hasPermission("ar.reload")) {
+                commandSender.sendMessage(getMessage("no-perm"));
+                return true;
+            }
+            this.reloadConfig();
+            commandSender.sendMessage(getMessage("reload-success"));
+            return true;
+        });
+        this.getServer().getPluginManager().registerEvents(new OnTeleport(), this);
+        config = this.getConfig();
+    }
+
+    @Override
+    public void reloadConfig() {
+        super.reloadConfig();
+        sound = Sound.valueOf(config.getString("teleport-sound"));
     }
 
     @Override
     public void onDisable() {
         Map map = Map.getInstance();
-        for (Player player : Bukkit.getOnlinePlayers()){
+        for (Player player : Bukkit.getOnlinePlayers()) {
             map.handlePlayerQuit(player);
         }
         getLogger().info("GTAStyleTeleport disabled");
@@ -42,46 +63,34 @@ public class GTAStyleTP extends JavaPlugin {
             sender.sendMessage("you are not player!");
             return false;
         }
-        if (!sender.hasPermission("gtateleport.tester")) {
-            sender.sendMessage("§c沒有權限");
+        if (!sender.hasPermission("ar.tester")) {
+            sender.sendMessage(getMessage("no-perm"));
             return false;
         }
         File testlocfile = new File(this.getDataFolder(), "test-location.yml");
         FileConfiguration testloc = YamlConfiguration.loadConfiguration(testlocfile);
         Player player = (Player) sender;
-        if (command.getName().equals("setloc")){
+        if (command.getName().equals("setloc")) {
             Location loc = player.getLocation();
-            double pitch = loc.getPitch();
-            double yaw = loc.getYaw();
-            testloc.set("world",loc.getWorld().getName());
-            testloc.set("x",loc.getX());
-            testloc.set("y",loc.getY());
-            testloc.set("z",loc.getZ());
-            testloc.set("pitch",pitch);
-            testloc.set("yaw",yaw);
+            testloc.createSection("", loc.serialize());
             try {
                 testloc.save(testlocfile);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            player.sendMessage("§a測試位置設置成功! 可輸入 /loc 來測試GTA傳送");
+            player.sendMessage(getMessage("set-success"));
         }
         if(command.getName().equals("loc")){
             if (!testloc.contains("world")) {
-                player.sendMessage("§c尚未設置測試位置!");
+                player.sendMessage(getMessage("no-loc"));
                 return false;
             }
             World world = Bukkit.getWorld(testloc.getString("world"));
             if (world == null){
-                player.sendMessage("§c位置無效!");
+                player.sendMessage(getMessage("invalid-loc"));
                 return false;
             }
-            double x = testloc.getDouble("x");
-            double y = testloc.getDouble("y");
-            double z = testloc.getDouble("z");
-            double pitch = testloc.getDouble("pitch");
-            double yaw = testloc.getDouble("yaw");
-            player.teleport(new Location(world,x,y,z,(float)yaw,(float)pitch));
+            player.teleport(Location.deserialize(testloc.getValues(false)));
         }
         return true;
     }
