@@ -1,5 +1,5 @@
 name: AnimatedTeleport
-version: "1.6"
+version: "2.1"
 main: com.ericlam.main.AnimatedTeleport
 author: hydranapse_
 api-version: "1.13"

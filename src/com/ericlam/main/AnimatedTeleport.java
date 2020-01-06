@@ -1,7 +1,10 @@
 package com.ericlam.main;
 
 import com.ericlam.listener.OnTeleport;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -26,8 +29,9 @@ public class AnimatedTeleport extends JavaPlugin {
     @Override
     public void onEnable() {
         plugin = this;
-        addNewFile("config.yml");
-        addNewFile("test-location.yml");
+        saveDefaultConfig();
+        reloadConfig();
+        getFileConfig("test-location.yml");
         getLogger().info("GTAStyleTeleport enabled");
         this.getCommand("ar-reload").setExecutor((commandSender, command, s, strings) -> {
             if (!commandSender.hasPermission("ar.reload")) {
@@ -39,12 +43,12 @@ public class AnimatedTeleport extends JavaPlugin {
             return true;
         });
         this.getServer().getPluginManager().registerEvents(new OnTeleport(), this);
-        config = this.getConfig();
     }
 
     @Override
     public void reloadConfig() {
         super.reloadConfig();
+        config = this.getConfig();
         sound = Sound.valueOf(config.getString("teleport-sound"));
     }
 
@@ -68,11 +72,11 @@ public class AnimatedTeleport extends JavaPlugin {
             return false;
         }
         File testlocfile = new File(this.getDataFolder(), "test-location.yml");
-        FileConfiguration testloc = YamlConfiguration.loadConfiguration(testlocfile);
+        FileConfiguration testloc = getFileConfig("test-location.yml");
         Player player = (Player) sender;
         if (command.getName().equals("setloc")) {
             Location loc = player.getLocation();
-            testloc.createSection("", loc.serialize());
+            testloc.set("test", loc);
             try {
                 testloc.save(testlocfile);
             } catch (IOException e) {
@@ -80,24 +84,23 @@ public class AnimatedTeleport extends JavaPlugin {
             }
             player.sendMessage(getMessage("set-success"));
         }
-        if(command.getName().equals("loc")){
-            if (!testloc.contains("world")) {
+        if(command.getName().equals("loc")) {
+            if (!testloc.contains("test")) {
                 player.sendMessage(getMessage("no-loc"));
                 return false;
             }
-            World world = Bukkit.getWorld(testloc.getString("world"));
-            if (world == null){
+            try {
+                player.teleport(testloc.getSerializable("test", Location.class));
+            } catch (IllegalArgumentException e) {
                 player.sendMessage(getMessage("invalid-loc"));
-                return false;
             }
-            player.teleport(Location.deserialize(testloc.getValues(false)));
         }
         return true;
     }
 
-    private void addNewFile(String yaml){
-        File file = new File(this.getDataFolder(),yaml);
-        if (!file.exists()) this.saveResource(yaml,false);
-        YamlConfiguration.loadConfiguration(file);
+    private FileConfiguration getFileConfig(String yaml) {
+        File file = new File(this.getDataFolder(), yaml);
+        if (!file.exists()) this.saveResource(yaml, false);
+        return YamlConfiguration.loadConfiguration(file);
     }
 }

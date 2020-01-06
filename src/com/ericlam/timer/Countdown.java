@@ -79,7 +79,7 @@ public class Countdown {
                     player.setFlying(false);
                     player.setFlySpeed(0.1F);
                     player.setGravity(true);
-                    player.setAllowFlight(false);
+                    if (beforegammemode != GameMode.CREATIVE) player.setAllowFlight(false);
                     map.getFreeze().remove(player);
                     map.getLoc().remove(player);
                     map.getGamemode().remove(player);

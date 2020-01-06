@@ -70,7 +70,7 @@ public class CountdownOnJoin {
                 player.teleport(originTo);
                 player.setGameMode(beforegammemode);
                 player.setFlying(false);
-                player.setAllowFlight(false);
+                if (beforegammemode != GameMode.CREATIVE) player.setAllowFlight(false);
                 player.setFlySpeed(0.1F);
                 Map map = Map.getInstance();
                 map.getFreeze().remove(player);
