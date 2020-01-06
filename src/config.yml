@@ -12,11 +12,14 @@ enable-on-join: true
 allow-command:
   - /loc
   - /tp
-  - /home
+  - /home:5 #teleport delay for 5 second, you must mark it or not the animated style will not apply
   - /spawn
 # 傳送聲效 (默認 1.14.4 聲效名稱，若要轉版本，請自行更改)
 # teleport sound (default using 1.14.4 sound name, change the sound name to match your server version yourself.)
 teleport-sound: ENTITY_ENDERMAN_TELEPORT
+# 啟用失明效果
+# enable the blindness effect between teleport
+blindness-enable: true
 messages:
   tp-title: "&e正在傳送..."
   no-perm: "&c沒有權限"

@@ -43,7 +43,8 @@ public class CountdownOnJoin {
                 y2 += intervalY*2;
                 to.setY(y2);
                 player.teleport(to);
-                player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 0));
+                if (config.getBoolean("blindness-enable", true))
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 0));
                 player.playSound(to, AnimatedTeleport.sound, 1, 1);
                 //player.sendMessage("DEBUG: y is now "+y2);
             }
@@ -54,7 +55,8 @@ public class CountdownOnJoin {
                 y2 -= intervalY;
                 to.setY(y2);
                 player.teleport(to);
-                player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 0));
+                if (config.getBoolean("blindness-enable", true))
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 0));
                 player.playSound(to, AnimatedTeleport.sound, 1, 1);
                 //player.sendMessage("DEBUG: y is now "+y2);
             }
@@ -64,7 +66,8 @@ public class CountdownOnJoin {
                 to.setYaw(90);
                 y2 -= intervalY;
                 to.setY(y2);
-                player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 0));
+                if (config.getBoolean("blindness-enable", true))
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 0));
                 player.playSound(to, AnimatedTeleport.sound, 1, 1);
                 //player.sendMessage("DEBUG: y is now "+y2);
                 player.teleport(originTo);

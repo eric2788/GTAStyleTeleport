@@ -6,19 +6,17 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitScheduler;
 
-import java.io.File;
 import java.util.HashMap;
 
 public class Countdown {
     private Plugin plugin = AnimatedTeleport.plugin;
-    private FileConfiguration config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "config.yml"));
+    private FileConfiguration config = AnimatedTeleport.config;
     private double time = config.getInt("time");
     private final double origintime = time;
     private HashMap<Player, Integer> count = Map.getInstance().getCount();
@@ -44,7 +42,8 @@ public class Countdown {
                 from.setYaw(90);
                 y += intervalY;
                 from.setY(y);
-                player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 0));
+                if (config.getBoolean("blindness-enable", true))
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 0));
                 player.playSound(from, AnimatedTeleport.sound, 1, 1);
                 player.teleport(from);
                 //player.sendMessage("DEBUG: y is now "+y);
@@ -55,7 +54,8 @@ public class Countdown {
                 to.setYaw(90);
                 y2 += intervalY*3;
                 to.setY(y2);
-                player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 0));
+                if (config.getBoolean("blindness-enable", true))
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 0));
                 player.playSound(to, AnimatedTeleport.sound, 1, 1);
                 player.teleport(to);
                 //player.sendMessage("DEBUG: y is now "+y2);
@@ -69,7 +69,8 @@ public class Countdown {
                 player.setFlying(true);
                 player.setFlySpeed(0.0f);
                 to.setY(y2);
-                player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 0));
+                if (config.getBoolean("blindness-enable", true))
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 0));
                 player.playSound(to, AnimatedTeleport.sound, 1, 1);
                 //player.sendMessage("DEBUG: y is now "+y2);
                 if (time == Math.round(origintime * 0)) {

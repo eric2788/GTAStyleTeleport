@@ -56,7 +56,7 @@ public class OnTeleport implements Listener {
     public void onPlayerCommand(PlayerCommandPreprocessEvent e){
         Player player = e.getPlayer();
         String[] label = e.getMessage().split(" ");
-        if (map.getCount().containsKey(player)){
+        if (map.getCount().containsKey(player)) {
             e.setCancelled(true);
             player.sendMessage(AnimatedTeleport.getMessage("teleporting"));
             return;
@@ -64,18 +64,29 @@ public class OnTeleport implements Listener {
         if (allow.contains(player)) return;
         //player.sendMessage("DEBUG: "+e.getMessage());
         List<String> commandlist = config.getStringList("allow-command");
-        for (String commands : commandlist) {
+        for (String commandsC : commandlist) {
+            String[] cmds = commandsC.split(":");
+            long delay = 0;
+            if (cmds.length > 1) {
+                try {
+                    delay = Long.parseLong(cmds[1]) * 20L;
+                } catch (NumberFormatException ex) {
+                    plugin.getLogger().warning(ex.getMessage());
+                    player.sendMessage(ex.getMessage());
+                }
+            }
+            String commands = cmds[0];
             if (label[0].equalsIgnoreCase(commands)) {
                 allow.add(player);
                 //player.sendMessage("DEBUG: 符合指令列表內的指令，已把你添加到隊列。");
-                map.getLoc().put(player,player.getLocation());
-                Bukkit.getScheduler().runTaskLater(plugin, ()->{
-                    if (!Map.getInstance().getCount().containsKey(player)){
+                map.getLoc().put(player, player.getLocation());
+                Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                    if (!Map.getInstance().getCount().containsKey(player)) {
                         allow.remove(player);
                         map.getLoc().remove(player);
                         //player.sendMessage("DEBUG： 沒有觸發傳送，已移除你至隊列。");
                     }
-                },20L);
+                }, 20L + delay);
                 break;
             }
         }
@@ -94,3 +105,4 @@ public class OnTeleport implements Listener {
 
     }
 }
+

@@ -20,7 +20,7 @@ public class AnimatedTeleport extends JavaPlugin {
     public static Plugin plugin;
 
     public static Sound sound;
-    private static FileConfiguration config;
+    public static FileConfiguration config;
 
     public static String getMessage(String path) {
         return ChatColor.translateAlternateColorCodes('&', config.getString("messages.".concat(path)));
