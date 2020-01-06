@@ -9,6 +9,7 @@ commands:
   loc:
     description: tp to test location
   ar-reload:
+    aliases: [areload]
     description: reload config
 permissions:
   ar.tester:
