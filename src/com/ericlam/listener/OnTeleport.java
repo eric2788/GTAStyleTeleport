@@ -28,15 +28,20 @@ public class OnTeleport implements Listener {
     @EventHandler
     public void onPlayerTeleport(PlayerTeleportEvent e){
         Player player = e.getPlayer();
-        if(allow.contains(e.getPlayer())) {
+        if (allow.contains(e.getPlayer())) {
             e.setCancelled(true);
             Location from = e.getFrom();
             Location to = e.getTo();
             GameMode gm = e.getPlayer().getGameMode();
-            map.getGamemode().put(player,gm);
+            map.getGamemode().put(player, gm);
             Countdown count = new Countdown();
             count.startCountdown(e.getPlayer(), from, to, gm);
             allow.remove(e.getPlayer());
+        }
+        if (map.getCount().containsKey(player)) {
+            if (e.getCause() == PlayerTeleportEvent.TeleportCause.SPECTATE) {
+                e.setCancelled(true);
+            }
         }
     }
 
